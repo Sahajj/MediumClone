@@ -59,7 +59,7 @@ export const useAuth = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     useEffect(() => {
-        axios.get(`${BACKEND_URL}/api/v1/check`, {
+        axios.get(`${BACKEND_URL}/api/v1/user/check`, {
             headers: {
                 Authorization: localStorage.getItem("token")
             }
