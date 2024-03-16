@@ -59,7 +59,7 @@ export const useBlog = ({ id }: { id: string }) => {
                     setVUser(false)
                     setLoading(false);
                 } else {
-                    setBlog(response.data.blogs);
+                    setBlog(response.data.blog);
                     setLoading(false);
                     setVUser(true)
                 }
