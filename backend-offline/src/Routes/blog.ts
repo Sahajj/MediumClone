@@ -1,7 +1,7 @@
 import { Hono } from "hono";
 import { PrismaClient } from '@prisma/client/edge'
 import { withAccelerate } from '@prisma/extension-accelerate'
-import { decode, sign, verify } from 'hono/jwt'
+import { verify } from 'hono/jwt'
 import { createBlogInput, updateBlogInput } from "@sahajj9/medium-common";
 
 export const blogRouter = new Hono<{
@@ -178,5 +178,4 @@ blogRouter.delete('/:id', async (c) => {
             message: "No such Blog Exists"
         })
     } 
-  
 })

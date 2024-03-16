@@ -80,3 +80,24 @@ userRouter.post('/signin', async (c) => {
     }
 
 })
+
+userRouter.get("/check", async (c) => {
+
+    const authHeader = c.req.header("Authorization") || "";
+    try {
+        const user = await verify(authHeader, c.env.JWT_SECRET)
+        if (user) {
+            return c.json({
+                message: "A Valid User"
+            })
+        } else {
+            return c.json({
+                message: "Not Valid User"
+            })
+        }
+    } catch (e) {
+        return c.json({
+            Error: e
+        })
+    }
+})
