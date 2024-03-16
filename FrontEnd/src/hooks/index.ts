@@ -6,14 +6,15 @@ export interface Blog {
     content: string;
     title: string;
     id: number;
-    author:{
-        name:string
+    author: {
+        name: string
     }
 }
 
 export const useBlogs = () => {
     const [loading, setLoading] = useState(true);
     const [blogs, setBlogs] = useState<Blog[]>([]);
+    const [Vuser, setVUser] = useState(false)
 
     useEffect(() => {
         axios.get(`${BACKEND_URL}/api/v1/blog/bulk`, {
@@ -22,18 +23,26 @@ export const useBlogs = () => {
             }
         })
             .then(response => {
-                setBlogs(response.data.blogs);
-                setLoading(false);
+                if (response.data.message === "You are not logged in") {
+                    setVUser(false)
+                    setLoading(false);
+                } else {
+                    setBlogs(response.data.blogs);
+                    setLoading(false);
+                    setVUser(true)
+                }
+
             })
-    },[])
+    }, [])
 
     return {
         loading,
-        blogs
+        blogs,
+        Vuser
     }
 }
 
-export const useBlog = ({ id }: {id: string }) => {
+export const useBlog = ({ id }: { id: string }) => {
     const [loading, setLoading] = useState(true);
     const [blog, setBlog] = useState<Blog>();
 
@@ -47,32 +56,10 @@ export const useBlog = ({ id }: {id: string }) => {
                 setBlog(response.data.blog);
                 setLoading(false);
             })
-    },[id])
+    }, [id])
 
     return {
         loading,
         blog
     }
 }
-
-export const useAuth = () => {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-    useEffect(() => {
-        axios.get(`${BACKEND_URL}/api/v1/user/check`, {
-            headers: {
-                Authorization: localStorage.getItem("token")
-            }
-        })
-        .then(response => {
-            // Assuming the response is "A Valid user" if logged in
-            setIsLoggedIn(response.data === "A Valid user");
-        })
-        .catch(error => {
-            console.log(error);
-            setIsLoggedIn(false); // Handle error if needed
-        });
-    }, []);
-
-    return isLoggedIn; // Return isLoggedIn and error states
-} 

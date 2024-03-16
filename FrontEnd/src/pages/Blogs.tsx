@@ -4,16 +4,15 @@ import { AppBar } from "../component/AppBar"
 import { BlogCard } from "../component/BlogCard"
 import { BlogSkeletons } from "../component/BlogSkeletons";
 import { useBlogs } from "../hooks/index";
-import { useAuth } from "../hooks/index";
+
 
 export const Blogs = () => {
   const navigate = useNavigate()
-  const isLoggedIn = useAuth();
-  if(!isLoggedIn){
-    toast.error("User is not Logged in") 
+  const { loading, blogs, Vuser } = useBlogs();
+  if(Vuser == false){
     navigate("/signup")
+    toast.error("user is not Logged In")
   }
-  const { loading, blogs } = useBlogs();
   if (loading) {
     return <div>
       <AppBar />
