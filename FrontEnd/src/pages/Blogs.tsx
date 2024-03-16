@@ -1,8 +1,18 @@
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import { AppBar } from "../component/AppBar"
 import { BlogCard } from "../component/BlogCard"
 import { BlogSkeletons } from "../component/BlogSkeletons";
 import { useBlogs } from "../hooks/index";
+import { useAuth } from "../hooks/index";
+
 export const Blogs = () => {
+  const navigate = useNavigate()
+  const isLoggedIn = useAuth();
+  if(!isLoggedIn){
+    toast.error("User is not Logged in") 
+    navigate("/signup")
+  }
   const { loading, blogs } = useBlogs();
   if (loading) {
     return <div>

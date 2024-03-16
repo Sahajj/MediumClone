@@ -54,3 +54,25 @@ export const useBlog = ({ id }: {id: string }) => {
         blog
     }
 }
+
+export const useAuth = () => {
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+    useEffect(() => {
+        axios.get(`${BACKEND_URL}/api/v1/check`, {
+            headers: {
+                Authorization: localStorage.getItem("token")
+            }
+        })
+        .then(response => {
+            // Assuming the response is "A Valid user" if logged in
+            setIsLoggedIn(response.data === "A Valid user");
+        })
+        .catch(error => {
+            console.log(error);
+            setIsLoggedIn(false); // Handle error if needed
+        });
+    }, []);
+
+    return isLoggedIn; // Return isLoggedIn and error states
+} 

@@ -78,14 +78,14 @@ export const Auth = ({ type }: { type: "signup" | "signin" }) => {
                             });
                         }} /> : null}
 
-                        <LabelledInput label="UserName" placeholder="Jhon@gmail.com" onChange={(e) => {
+                        <LabelledInput label="*UserName" placeholder="Jhon@gmail.com" onChange={(e) => {
                             setPostInput({
                                 ...PostInputs, // overrides the name and let's us use the old fields as they are
                                 username: e.target.value
                             });
                         }} />
 
-                        <LabelledInput label="Password" type={"password"} placeholder="12345678" onChange={(e) => {
+                        <LabelledInput label="*Password" type={"password"} placeholder="12345678" onChange={(e) => {
                             setPostInput({
                                 ...PostInputs, // overrides the name and let's us use the old fields as they are
                                 password: e.target.value
