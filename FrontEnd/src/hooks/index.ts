@@ -45,6 +45,8 @@ export const useBlogs = () => {
 export const useBlog = ({ id }: { id: string }) => {
     const [loading, setLoading] = useState(true);
     const [blog, setBlog] = useState<Blog>();
+    const [Vuser, setVUser] = useState(false)
+
 
     useEffect(() => {
         axios.get(`${BACKEND_URL}/api/v1/blog/${id}`, {
@@ -53,13 +55,20 @@ export const useBlog = ({ id }: { id: string }) => {
             }
         })
             .then(response => {
-                setBlog(response.data.blog);
-                setLoading(false);
+                if (response.data.message === "You are not logged in") {
+                    setVUser(false)
+                    setLoading(false);
+                } else {
+                    setBlog(response.data.blogs);
+                    setLoading(false);
+                    setVUser(true)
+                }
             })
     }, [id])
 
     return {
         loading,
-        blog
+        blog,
+        Vuser
     }
 }

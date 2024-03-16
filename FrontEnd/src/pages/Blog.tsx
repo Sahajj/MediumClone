@@ -1,14 +1,18 @@
 import { Spinner } from "../component/Spinner";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { AppBar } from "../component/AppBar";
 import { FullBlog } from "../component/FullBlog";
 import { useBlog } from "../hooks";
 
 export const Blog = () => {
+  const navigate = useNavigate()
   const { id } = useParams();
-  const {loading , blog} = useBlog({
+  const {loading , blog, Vuser } = useBlog({
     id: id || ""
   });
+  if(Vuser === false){
+    navigate("/signup")
+  }
 
   if (loading || !blog) {
     return <div>
