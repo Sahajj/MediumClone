@@ -9,7 +9,7 @@ import { useBlogs } from "../hooks/index";
 export const Blogs = () => {
   const navigate = useNavigate()
   const { loading, blogs, Vuser } = useBlogs();
-  if(Vuser == false){
+  if(Vuser === false){
     navigate("/signup")
     toast.error("user is not Logged In")
   }
